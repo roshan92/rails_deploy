@@ -147,10 +147,10 @@ ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 ```
 
-##### Visit the github and add ssh, after test it
+##### Visit the bitbucket/github and add ssh, after test it
 
 ```
-ssh -T git@github.com
+ssh -T git@bitbucket.com
 ```
 
 
