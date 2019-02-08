@@ -11,7 +11,7 @@
 * [Capistrano](http://capistranorb.com/)
 
 
-### The tutorial work with server by [digitalocean.com](https://m.do.co/c/03deef324558)
+### The tutorial work with server by [digitalocean.com](m)
 ##### Login and create a droplet Ubuntu 16.04x64 1gb cpu & 30gb disk
 
 ```
@@ -105,9 +105,9 @@ exec $SHELL
 ```
 rbenv install -l
 
-rbenv install 2.4.0
+rbenv install 2.5.1
 
-rbenv global 2.4.0
+rbenv global 2.5.1
 
 rbenv rehash
 
@@ -151,25 +151,31 @@ ssh -T git@github.com
 ```
 
 
-#### Next, install Mysql
+#### Next, install PostgreSQL
 ```
 sudo aptitude update
 
-sudo apt-get install mysql-server mysql-client libmysqlclient-dev
-
-sudo mysql_install_db
-
-sudo mysql_secure_installation
-```
-
-Create mysql database
+sudo apt-get install postgresql postgresql-contrib libpq-dev
 
 ```
-mysql -u root -p
 
-CREATE DATABASE `app` CHARACTER SET utf8 COLLATE utf8_general_ci;
+Create user (this will be same user in your database.yml, username field for the production tag):
+
+```
+sudo -u postgres createuser -s <APPNAME>
+
 ```
 
+Set password for APPNAME
+
+```
+sudo -u postgres psql
+\password <APPNAME>
+
+postgres=# CREATE DATABASE appname_production;
+postgres=# ALTER USER Postgres WITH PASSWORD 'new password';
+
+```
 
 
 **Add additional gem into Gemfile**
@@ -194,7 +200,7 @@ bundle
 rbenv rehash
 ```
 
-#### Create files from caristrano
+#### Create files from capistrano
 
 ```
 cap install
@@ -202,9 +208,7 @@ cap install
 
 
 
-
-Copy [config/deploy.rb](../master/config/deploy.rb) & [Capfile](../master/Capfile) files
- and paste in your rails app
+Copy [config/deploy.rb](../master/config/deploy.rb) & [Capfile](../master/Capfile) files and paste in your rails app
 
 
 
@@ -225,13 +229,13 @@ cap production deploy:initial
 #### make file /home/deploy/apps/app/shared/config/database.yml
 ```
 production:
-  adapter: mysql2
-  pool: 5
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  encoding: utf8
-  database: app
-  username: root
-  password: xxxxxxxxx
+  encoding: unicode
+  database: app_name
+  username: <%= ENV['APPNAME_DATABASE_USERNAME'] %>
+  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>
 ```
 
 
@@ -247,6 +251,8 @@ sudo vim /etc/environment
 
 ```
 export SECRET_KEY_BASE=abb2e9e094bb8fb1aa216defed455caa0f9
+export APPNAME_DATABASE_USERNAME=database_username
+export APPNAME_DATABASE_PASSWORD=database_password
 ```
 
 
