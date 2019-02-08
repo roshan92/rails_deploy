@@ -162,22 +162,39 @@ sudo apt-get install postgresql postgresql-contrib libpq-dev
 
 ```
 
-Create user (this will be same user in your database.yml, username field for the production tag):
+###### Create user (this will be same user in your database.yml, username field for the production tag):
 
 ```
 sudo -u postgres createuser -s <APPNAME>
 
 ```
 
-Set password for APPNAME
+###### Set password for APPNAME
 
 ```
 sudo -u postgres psql
 \password <APPNAME>
 
 postgres=# CREATE DATABASE appname_production;
-postgres=# ALTER USER Postgres WITH PASSWORD 'new password';
+```
 
+####
+
+```
+vim /etc/postgresql/9.5/main/pg_hba.conf
+```
+
+##### replace
+
+local   all             postgres                                peer
+
+###### to
+
+local   all             postgres                                md5
+
+###### restart postgresql
+```
+sudo service postgresql restart
 ```
 
 
@@ -221,7 +238,7 @@ git commit -m "Set up Puma, Nginx & Capistrano"
 git push origin master
 ```
 
-Run capistrano init
+###### Run capistrano init
 
 ```
 cap production deploy:initial
@@ -242,7 +259,6 @@ production:
 ```
 
 
-
 #### Set ubuntu environment variable
 ```
 rails secret
@@ -259,12 +275,6 @@ export APPNAME_DATABASE_PASSWORD=database_password
 ```
 
 
-At first time run in apps/app/release/2017456534
-
-```
-RAILS_ENV=production bundle exec rake db:create
-```
-
 Example [config/nginx.conf](../master/config/nginx.conf) file, paste in your rails app
 
 
@@ -272,7 +282,7 @@ Example [config/nginx.conf](../master/config/nginx.conf) file, paste in your rai
 ```
 sudo rm /etc/nginx/sites-enabled/default
 
-sudo ln -nfs "/home/deploy/apps/app/current/config/nginx.conf" "/etc/nginx/sites-enabled/app"
+sudo ln -nfs "/home/deploy/apps/app_name/current/config/nginx.conf" "/etc/nginx/sites-enabled/app_name"
 
 sudo service nginx restart
 ```
@@ -293,12 +303,29 @@ At the end, run
 `cap production deploy`
 
 
-####How to install let's encrypt [#1](https://github.com/roshan92/rails_deploy/issues/1)
+#### How to install let's encrypt [#1](https://github.com/roshan92/rails_deploy/issues/1)
 
-if you have some problem, create new issue in this repo
+If you have some problem, create new issue in this repo. I want to make this document better for the next guy, so let me know if there’s anything I can improve.
 
-##Happy coding...
+## Happy coding...
 
 
+##### Bugs you might encounter and ways to solve.
 
+**find_spec_for_exe': can't find gem bundler (>= 0.a) (Gem::GemNotFoundException)**
+
+```
+#will update the rubygems and will fix the problem.
+gem update --system
+```
+
+##### Tips
+Always ```sudo nginx -t``` to verify your config files are good.
+
+
+**If you are uploading images, please remember to install  ImageMagick**
+
+```
+sudo apt-get install imagemagick
+```
 
