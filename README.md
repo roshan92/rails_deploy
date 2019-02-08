@@ -30,7 +30,7 @@ If you have error with locale
 ```
 sudo locale-gen el_GR.UTF-8
 ```
-##### Next create ssh connection for deploy
+##### Next add deploy user
 ```
 adduser deploy
 ```
