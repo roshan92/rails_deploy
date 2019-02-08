@@ -1,11 +1,11 @@
-lock "3.7.2"
+lock "~> 3.11.0"
 
-set :rbenv_ruby, '2.4.0'
+set :rbenv_ruby, '2.5.1'
 
 # Change these
-server 'xxx.xxx.xx', port: 4433, roles: [:web, :app, :db], primary: true
+server 'xxx.xxx.xx', port: 22, roles: [:web, :app, :db], primary: true
 
-set :repo_url,        'git@github.com:username/reponame.git'
+set :repo_url,        'git@bitbucket.org:username/reponame.git'
 set :application,     'app'
 set :user,            'deploy'
 set :puma_threads,    [4, 16]
