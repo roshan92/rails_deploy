@@ -11,8 +11,8 @@
 * [Capistrano](http://capistranorb.com/)
 
 
-### The tutorial work with server by [digitalocean.com](m)
-##### Login and create a droplet Ubuntu 16.04x64 1gb cpu & 30gb disk
+### The tutorial work with server by [digitalocean.com]
+##### Login and create a droplet Ubuntu 16.04x64 1gb cpu & 50gb disk
 
 ```
 ssh root@xxx.xxx.xx
@@ -290,7 +290,7 @@ At the end, run
 `cap production deploy`
 
 
-####How to install let's encrypt [#1](https://github.com/xargr/rails_deploy/issues/1)
+####How to install let's encrypt [#1](https://github.com/roshan92/rails_deploy/issues/1)
 
 if you have some problem, create new issue in this repo
 
