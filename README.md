@@ -5,14 +5,14 @@
 
 * [Rails 5](http://rubyonrails.org/)
 * [Nginx](https://www.nginx.com/resources/wiki/)
-* [Mysql](https://www.mysql.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 * [Puma](http://puma.io/)
 * [Ubuntu 16.04](https://www.ubuntu.com/)
 * [Capistrano](http://capistranorb.com/)
 
 
 ### The tutorial work with server by [digitalocean.com]
-##### Login and create a droplet Ubuntu 16.04x64 1gb cpu & 50gb disk
+##### Login and create a droplet Ubuntu 16.04x64 1gb cpu & 30gb disk
 
 ```
 ssh root@xxx.xxx.xx
