@@ -115,9 +115,11 @@ rbenv rehash
 ruby -v
 ```
 
-**You just add following line to your local `~/.gemrc` file (it is in your home folder)**
+**Set default to not generate document for gem install**
 
-`gem: --no-document`
+```
+echo 'gem: --no-document' >> ~/.gemrc
+```
 
 ##### Next, install ruby gems version control system
 
