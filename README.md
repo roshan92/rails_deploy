@@ -30,45 +30,46 @@ If you have error with locale
 ```
 sudo locale-gen el_GR.UTF-8
 ```
-##### Next exit from server and create ssh connection
+##### Next create ssh connection for deploy
 ```
-ssh-copy-id root@xxx.xxx.xx
-
-sudo adduser deploy
-
-sudo adduser deploy sudo
-
-ssh-copy-id deploy@xxx.xxx.xx
+adduser deploy
 ```
 
-##### Edit ssh setting
+##### Give deploy root privileges
 ```
-sudo vim /etc/ssh/sshd_config
-```
-##### Next, we need to find the line that looks like this:
-
-```
-PermitRootLogin yes
-```
-##### Modify this line to "no" like this to disable root login:
-```
-PermitRootLogin no
+usermod -aG sudo deploy
 ```
 
-##### Next, we need to find the line that looks like this:
-```
-Port 22
-```
-##### Modify this line between 22 and 50000:
+##### Add Public Key Auth to Your Server.
 
 ```
-Port 4323
+## Use already created local SSH key and add to the server.
+## Local Machine
+cat ~/.ssh/id_rsa.pub | pbcopy
+```
+
+##### Paste SSH Key to Deployed User's Authorized Keys
+
+```
+## Server
+$ su - deploy
+$ mkdir ~/.ssh
+$ chmod 700 ~/.ssh
+$ nano ~/.ssh/authorized_keys 
+# Paste Key
+```
+
+##### Change permissions back:
+```
+chmod 600 ~/.ssh/authorized_keys
 ```
 
 ##### Next, reload service ssh
 ```
-service ssh restart
+sudo systemctl reload sshd
 ```
+
+Test Login: ssh deploy@server_ip
 
 #### Install additional packages from Rails
 ```
