@@ -329,3 +329,7 @@ Always ```sudo nginx -t``` to verify your config files are good.
 sudo apt-get install imagemagick
 ```
 
+**If you edit the nginx file, make sure to run the command below to restart the server with new config changes**
+```
+/etc/init.d/nginx reload
+```
